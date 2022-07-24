@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id="header"> 
+		<span id="colorDisplay">RGB</span>
+		<div id="score">Score: 0</div>
+		<button id="reset">Reset</button>
+		<span id="message"></span>
+		
+	  </div>
+	
+	
+		
+	</div>
+		<div id="container">
+			<div class="circle"></div>
+			<div class="circle"></div>
+			<div class="circle"></div>
+			<div class="circle"></div>
+			<div class="circle"></div>
+			<div class="circle"></div>
+		</div>
+		<footer>
+			<p>s
+			by shivang malhotra yo</p>
+		  </footer>
+		  <script>
+			var numCircles = 6;
+	var colors = generateRandomColors(numCircles);
+	var circles = document.querySelectorAll(".circle");
+	var pickedColor = randomColorG();
+	var colorDisplay = document.querySelector("#colorDisplay");
+	var messageDisplay = document.querySelector("#message");
+	var resetButton = document.querySelector("#reset");
+	var score=0;
+	
+	
+	function highlight(color,correct){
+	  var el = color; 
+	  if (correct) {
+		el.style.border = "8px #00AA00 outset";  
+	  } else {
+		el.style.border = "8px red outset";  
+	  }
+	  setTimeout(function(){
+			el.style.border = "none";
+			clickable=true;
+	   }, 800);
+	}
+	function dc(){
+	
+	colors = generateRandomColors(numCircles);
+	pickedColor = randomColorG();
+	colorDisplay.textContent = pickedColor;
+	resetButton.textContent = "Reset";
+	messageDisplay.textContent = "";
+	for(var i = 0; i < circles.length; i++){
+		circles[i].style.backgroundColor = colors[i];
+	} 
+	}
+	
+	
+	
+	resetButton.addEventListener("click",function(){
+	
+	colors = generateRandomColors(numCircles);
+	pickedColor = randomColorG();
+	colorDisplay.textContent = pickedColor;
+	resetButton.textContent = "Reset";
+	for(var i = 0; i < circles.length; i++){
+		circles[i].style.backgroundColor = colors[i];
+	}
+	score = 0;
+	  document.getElementById("score").innerHTML="Score: " + score;
+	 
+	} )
+	
+	colorDisplay.textContent = pickedColor;
+	
+	for(var i = 0; i < circles.length; i++) {
+		circles[i].style.backgroundColor = colors[i];
+	
+		circles[i].addEventListener("click", function(){
+			var clickedColor = this.style.backgroundColor;
+			console.log(clickedColor, pickedColor);
+			if(clickedColor === pickedColor){
+				highlight(this,true);
+				setTimeout(function(){
+				dc();
+				score+=10; document.getElementById("score").innerHTML="Score: " + score;
+				   }, 800);
+				
+	
+			}	else {
+				highlight(this,false);
+				score-=1;
+				 document.getElementById("score").innerHTML="Score: " + score;
+	
+			}
+			});
+	}
+	
+	function changeColors(colorz){
+		for(var i = 0; i < circles.length; i++){
+			circles[i].style.background = colorz;
+		}	
+	}
+	
+	function randomColorG(){
+		var random = Math.floor(Math.random() * colors.length)
+		return colors[random];
+	}
+	
+	function generateRandomColors(genColor){
+		var arr = []
+		for(var i = 0; i < genColor; i++){
+			arr.push(randomColor())
+		}
+		return arr;
+	}
+	
+	function randomColor(){
+		var r = Math.floor(Math.random() * 256);
+		var g = Math.floor(Math.random() * 256);
+		var b = Math.floor(Math.random() * 256);
+		return "rgb(" + r +", " + g +", " + b +")";
+	}
+		</script>
+</body>
+</html>
+	
